@@ -29,7 +29,7 @@ It works as a polished public demo with no external configuration. Supabase acco
 Requirements: Node.js 20 or newer and npm.
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/Project-Enclave/Imphal-tour-thingy.git
 cd Imphal-tour-thingy
 npm install
 cp .env.example .env.local
