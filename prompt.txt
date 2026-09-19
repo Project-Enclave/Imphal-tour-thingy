@@ -1,0 +1,234 @@
+Build a modern, responsive web application called **“Smart Trip Planner – Manipur”** for the **Re-Imagining Manipur – Hackathon 2026**.
+
+The website must be completely free to run and should use only free/open-source technologies. Can require free APIs, subscriptions, or API keys.
+
+## MAIN PURPOSE
+
+Create an intelligent tourism planner where a tourist enters their trip preferences and the website generates a personalized Manipur itinerary.
+
+The planner should consider:
+
+* Number of days
+* Approximate budget
+* Interests
+* Travel style
+* Number of people
+* Preferred pace
+* Starting location
+* Food preferences
+* Accessibility requirements
+
+## LANDING PAGE
+
+Create a visually attractive hero section:
+
+**“Plan Your Perfect Manipur Journey”**
+
+Subtitle:
+
+**“Tell us what you love. We'll create a personalized Manipur experience for you.”**
+
+Add a prominent button:
+
+**“Create My Trip →”**
+
+Use a clean tourism-inspired design with high-quality Manipur imagery, subtle animations and modern cards.
+
+## SMART TRIP PLANNER
+
+Create a multi-step form.
+
+### Step 1 — Trip Duration
+
+Options:
+
+* 1 Day
+* 2 Days
+* 3 Days
+* 4 Days
+* 5+ Days
+* Custom
+
+### Step 2 — Budget
+
+Options:
+
+* Under ₹1,000
+* ₹1,000–₹3,000
+* ₹3,000–₹5,000
+* ₹5,000–₹10,000
+* ₹10,000+
+* Custom
+
+### Step 3 — Interests
+
+Allow multiple selections:
+
+- History & Heritage
+- Nature
+- Adventure
+- Local Food
+- Culture
+- Shopping
+- Photography
+- Local Experiences
+- Peace & Relaxation
+- Etc
+
+### Step 4 — Travel Style
+
+Options:
+
+* Budget
+* Balanced
+* Comfortable
+* Adventure
+* Etc
+* Custom
+
+### Step 5 — Group
+
+Options:
+
+* Solo
+* Couple
+* Family
+* Friends
+* Etc
+
+Also ask for the number of travelers.
+
+### Step 6 — Starting Location
+
+Allow options such as:
+
+* Imphal
+* Airport
+* Custom location
+
+### Step 7 — Accessibility
+
+Optional selections:
+
+* Wheelchair-friendly places
+* Less walking
+* Family-friendly
+* Senior-friendly
+
+## GENERATE ITINERARY
+
+After the user clicks:
+
+**“Generate My Manipur Trip ✨”**
+
+create a personalized itinerary using a local JavaScript dataset of Manipur destinations.
+
+
+Use a smart rule-based recommendation system that scores destinations based on:
+
+* Interest match
+* Budget
+* Distance
+* Duration
+* Accessibility
+* Travel style
+
+Show the best matching destinations.
+
+## ITINERARY RESULT
+
+Display:
+
+### “Your Manipur Adventure”
+
+Example:
+
+**DAY 1 — History & Culture**
+
+🏛️ Kangla
+Description
+⏱️ Suggested duration
+💰 Estimated cost
+📍 Location
+⭐ Why this matches the user's interests
+
+↓
+
+🛍️ Ima Keithel
+
+↓
+
+🍜 Local food experience
+
+For each day show:
+
+* Morning
+* Afternoon
+* Evening
+
+Include estimated:
+
+* Daily cost
+* Travel time
+* Distance
+* Number of locations
+
+At the bottom display:
+
+**Estimated Total Cost: ₹XXXX**
+
+**Estimated Travel Time: XX hours**
+
+**Eco Score: XX/100**
+
+## SMART RECOMMENDATION SYSTEM
+
+Create a destination database containing at least 15–20 Manipur destinations and experiences.
+
+Each destination should have fields such as:
+
+```text
+name
+category
+description
+location
+estimatedCost
+duration
+interests
+accessibility
+ecoScore
+bestTime
+```
+
+Use this dataset to dynamically generate itineraries.
+
+Do not randomly select destinations.
+
+The recommendation algorithm should prioritize destinations that match the user's selected interests and budget.
+
+## ECO TOURISM FEATURE
+
+Give every itinerary an **Eco Score from 0–100**.
+
+Explain why the score was given.
+
+For example:
+
+- Local experiences
+- Walking
+- Shared/public transport
+- Local businesses
+- Low-waste activities
+
+Give suggestions such as:
+
+**“You can improve your Eco Score by choosing local experiences and shared transportation.”**
+
+## “WHY THIS TRIP?” SECTION
+
+After generating the itinerary, show:
+
+**“Why we chose these places for you”**
+
+
+Also, you can ask me anything else to clarify and you can change stuff around too, its is just a guide, not a rulebook
