@@ -1,3 +1,3 @@
 import { NextResponse } from "next/server";
-import { destinations } from "@/data/destinations";
-export function GET() { return NextResponse.json({ destinations, count: destinations.length }); }
+import { activeDestinations } from "@/lib/destination-store";
+export async function GET() { const destinations = await activeDestinations(); return NextResponse.json({ destinations, count: destinations.length }); }

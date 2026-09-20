@@ -13,8 +13,8 @@ export function scoreDestination(place: Destination, p: TripPreferences) {
   if (p.group === "Family" && place.accessibility.includes("Family-friendly")) score += 7;
   return score;
 }
-export function generateItinerary(p: TripPreferences): Itinerary {
-  const ranked = destinations.map(place => ({ place, score: scoreDestination(place, p) })).filter(x => x.score > -10).sort((a,b) => b.score-a.score);
+export function generateItinerary(p: TripPreferences, candidateDestinations: Destination[] = destinations): Itinerary {
+  const ranked = candidateDestinations.map(place => ({ place, score: scoreDestination(place, p) })).filter(x => x.score > -10).sort((a,b) => b.score-a.score);
   const perDay = p.pace === "packed" ? 3 : p.pace === "balanced" ? 2 : 2;
   const used = ranked.slice(0, Math.min(ranked.length, p.days * perDay));
   const days: ItineraryDay[] = Array.from({length:p.days}, (_, idx) => ({day:idx+1,theme:"Manipur highlights",items:[],cost:0,travelHours:0,distance:0}));

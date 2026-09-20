@@ -1,2 +1,2 @@
-import Account from "@/components/account";
-export default function AccountPage(){return <Account/>}
+import { redirect } from "next/navigation";
+export default function AccountPage(){ redirect("/login"); }

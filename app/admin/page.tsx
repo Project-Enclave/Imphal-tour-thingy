@@ -1,2 +1,2 @@
-import { destinations } from "@/data/destinations";
-export default function Admin(){return <main className="admin"><a href="/">← Back to planner</a><p className="eyebrow">OPERATIONS DASHBOARD</p><h1>Trip planner API</h1><div className="metrics"><article><b>{destinations.length}</b><span>Curated destinations</span></article><article><b>Rule-based</b><span>Recommendation engine</span></article><article><b>Ready</b><span>Vercel API routes</span></article></div><section><h2>Endpoints</h2><code>GET /api/health</code><code>GET /api/destinations</code><code>POST /api/itinerary</code><p>Connect Supabase and set <code>ADMIN_EMAILS</code> to enable authenticated metrics, saved trips, and destination management.</p></section></main>}
+import AdminDashboard from "@/components/admin-dashboard";
+export default function AdminPage(){ return <AdminDashboard />; }

@@ -11,7 +11,7 @@ It works as a polished public demo with no external configuration. Supabase acco
 - Scores 20+ Manipur destinations using an explainable, rule-based recommendation engine.
 - Creates non-random morning, afternoon, and evening plans with estimated cost, distance, travel time, and a reason for every suggestion.
 - Calculates an itinerary Eco Score and provides lower-impact travel suggestions.
-- Includes an optional account page for email/password or Google sign-in and saved trip storage when Supabase is connected.
+- Includes dedicated `/login`, `/signup`, and `/trips` pages for email/password or Google sign-in and saved trip storage when Supabase is connected.
 - Includes an operations dashboard at `/admin` and backend API endpoints for health checks, destination data, and itinerary generation.
 - Optionally uses Gemini and/or OpenRouter to write a warmer itinerary introduction and practical tips; the factual itinerary always comes from the local recommendation engine.
 
@@ -29,7 +29,7 @@ It works as a polished public demo with no external configuration. Supabase acco
 Requirements: Node.js 20 or newer and npm.
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/Project-Enclave/Imphal-tour-thingy.git
 cd Imphal-tour-thingy
 npm install
 cp .env.example .env.local
@@ -107,7 +107,7 @@ Copy `.env.example` to `.env.local`. Never commit real keys.
 2. Open its SQL Editor and run [`supabase/schema.sql`](supabase/schema.sql).
 3. Copy the project URL and anonymous key into `.env.local` or Vercel environment variables.
 4. In **Authentication → Providers**, enable Email and Google.
-5. Create Google OAuth credentials, then add your local and deployed callback URLs to Google and Supabase.
+5. Create Google OAuth credentials. In Supabase Auth URL Configuration, add `https://imphal.vercel.app/trips` and `https://imphal.projectenclave.dev/trips` to **Redirect URLs**. In Google Cloud, use Supabase’s provider callback URL (`https://<project-ref>.supabase.co/auth/v1/callback`) as the authorized redirect URI.
 6. Add your email address to `ADMIN_EMAILS` for dashboard access when admin authorization is enabled.
 
 ## Optional AI enhancement
@@ -131,7 +131,12 @@ Free AI plans have quotas and terms that can change. Do not send personal, sensi
 2. Import the repository in [Vercel](https://vercel.com/new).
 3. Add the environment variables you need in **Project Settings → Environment Variables**.
 4. Deploy.
-5. If using Supabase Google authentication, add the final Vercel URL to the authorized redirect URLs in both Supabase and Google Cloud.
+5. If using Supabase Google authentication, add both deployed account URLs to **Supabase Auth → URL Configuration → Redirect URLs**:
+
+   - `https://imphal.vercel.app/trips`
+   - `https://imphal.projectenclave.dev/trips`
+
+   In Google Cloud OAuth, the authorized redirect URI is instead the Supabase callback URL: `https://<your-project-ref>.supabase.co/auth/v1/callback`.
 
 ## Destination data and images
 

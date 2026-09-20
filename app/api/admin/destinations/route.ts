@@ -1,0 +1,8 @@
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { requireAdmin } from "@/lib/auth";
+import { serviceSupabase } from "@/lib/supabase";
+import { destinations } from "@/data/destinations";
+const destinationSchema = z.object({ id: z.string().min(2).max(80), name: z.string().min(2), category: z.string().min(2), data: z.record(z.unknown()), image_url: z.string().url().optional().nullable(), image_credit: z.string().max(300).optional().nullable(), visible: z.boolean().default(true) });
+export async function GET(request: NextRequest) { const admin = await requireAdmin(request); if (!admin) return NextResponse.json({ error: "Administrator access required." }, { status: 403 }); const db = serviceSupabase(); if (!db) return NextResponse.json({ configured: false, destinations }); const { data, error } = await db.from("destinations").select("*").order("name"); return NextResponse.json(error ? { error: error.message } : { configured: true, destinations: data }); }
+export async function POST(request: NextRequest) { const admin = await requireAdmin(request); if (!admin) return NextResponse.json({ error: "Administrator access required." }, { status: 403 }); const db = serviceSupabase(); if (!db) return NextResponse.json({ error: "SUPABASE_SERVICE_ROLE_KEY is required." }, { status: 503 }); const parsed = destinationSchema.safeParse(await request.json()); if (!parsed.success) return NextResponse.json({ error: "Invalid destination.", details: parsed.error.flatten() }, { status: 400 }); const { data, error } = await db.from("destinations").upsert(parsed.data).select().single(); return NextResponse.json(error ? { error: error.message } : { destination: data }, { status: error ? 400 : 201 }); }
