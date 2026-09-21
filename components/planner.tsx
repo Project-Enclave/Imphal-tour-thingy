@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import type { Interest, Itinerary, TripPreferences } from "@/lib/types";
 
@@ -123,16 +124,6 @@ export default function Planner() {
             Create My Trip <b>→</b>
           </button>
         </div>
-        <div className="hero-art">
-          <div className="sun" />
-          <div className="mountain one" />
-          <div className="mountain two" />
-          <span>
-            LOKTAK LAKE
-            <br />
-            <small>MANIPUR, INDIA</small>
-          </span>
-        </div>
       </section>
 
       <section id="planner" className="planner">
@@ -140,12 +131,10 @@ export default function Planner() {
         <div className="progress">
           {labels.map((x, i) => (
             <span key={x} className={i <= step ? "active" : ""}>
-              {i + 1}
-              <small>{x}</small>
+              {i + 1} <small>{x}</small>
             </span>
           ))}
         </div>
-
         <div className="panel">
           <p className="step">STEP {step + 1} OF 8</p>
 
@@ -214,7 +203,9 @@ export default function Planner() {
                   min="1"
                   max="20"
                   value={p.travelers}
-                  onChange={(e) => setP({ ...p, travelers: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setP({ ...p, travelers: Number(e.target.value) })
+                  }
                 />
               </label>
             </>
@@ -256,7 +247,9 @@ export default function Planner() {
               <Choice
                 values={options.pace}
                 value={p.pace}
-                onChange={(v) => setP({ ...p, pace: v as TripPreferences["pace"] })}
+                onChange={(v) =>
+                  setP({ ...p, pace: v as TripPreferences["pace"] })
+                }
                 render={(v) => String(v).replace(/^./, (c) => c.toUpperCase())}
               />
             </>
@@ -310,13 +303,13 @@ function Choice({
 }) {
   return (
     <>
-      <h2>{title}</h2>
+      {title && <h2>{title}</h2>}
       <div className="choices">
         {values.map((v) => (
           <button
+            key={v}
             className={v === value ? "selected" : ""}
             onClick={() => onChange(v)}
-            key={String(v)}
           >
             {render(v)}
           </button>
@@ -336,74 +329,88 @@ function Result({
   reset: () => void;
 }) {
   return (
-    <main className="result">
+    <main>
       <nav>
         <a className="brand" href="/">
           MANIPUR <i>•</i> WANDER
         </a>
-        <button className="back" onClick={reset}>
-          ← Edit trip
-        </button>
+        <span>Your Personalized Itinerary</span>
+        <span>
+          <a href="#" onClick={reset}>
+            Start Over
+          </a>
+          · <a href="/admin">Dashboard</a>
+        </span>
       </nav>
 
-      <header>
-        <p className="eyebrow">YOUR PERSONAL ITINERARY</p>
-        <h1>
-          Your Manipur <em>Adventure</em>
-        </h1>
-        <p className="lede">
-          {intro || "A thoughtful journey through Manipur's culture, landscapes, and local stories."}
-        </p>
-        <div className="summary">
-          <b>₹{itinerary.totalCost.toLocaleString("en-IN")}</b>
-          <span>estimated cost</span>
-          <b>{itinerary.totalTravelHours}h</b>
-          <span>travel time</span>
-          <b>{itinerary.ecoScore}/100</b>
-          <span>eco score</span>
-        </div>
-      </header>
+      <section className="result">
+        <header>
+          <p className="eyebrow">YOUR PERSONALIZED ITINERARY</p>
+          <h1>
+            Your <em>Manipur</em> Adventure Awaits
+          </h1>
+          {intro && <p className="lede">{intro}</p>}
+          <div className="summary">
+            {itinerary.days && (
+              <>
+                <b>{itinerary.days}</b>
+                <span>Days</span>
+              </>
+            )}
+            {itinerary.budget && (
+              <>
+                <b>₹{itinerary.budget.toLocaleString("en-IN")}</b>
+                <span>Est. Budget</span>
+              </>
+            )}
+          </div>
+        </header>
 
-      <section className="days">
-        {itinerary.days.map((d) => (
-          <article className="day" key={d.day}>
-            <div className="day-title">
-              <p>DAY {d.day}</p>
-              <h2>{d.theme}</h2>
-              <span>
-                {d.items.length} places · ₹{d.cost.toLocaleString("en-IN")} ·{" "}
-                {d.travelHours.toFixed(1)}h travel
-              </span>
-            </div>
-            {d.items.map((item) => (
-              <div className="activity" key={item.id}>
-                <span className="slot">{item.slot}</span>
-                <div>
-                  <p className="category">{item.category}</p>
-                  <h3>{item.name}</h3>
-                  <p>{item.description}</p>
-                  <small>
-                    ⏱ {item.duration}h · 💰 ₹{item.estimatedCost} · 📍{" "}
-                    {item.location}
-                  </small>
-                  <p className="why">★ {item.why}</p>
-                </div>
+        <div className="days">
+          {itinerary.days?.map((day, idx) => (
+            <div key={idx} className="day">
+              <div className="day-title">
+                <p>Day {idx + 1}</p>
+                <h2>{day.title}</h2>
+                {day.weather && <span>{day.weather}</span>}
               </div>
-            ))}
-          </article>
-        ))}
-      </section>
+              {day.activities?.map((activity, i) => (
+                <div key={i} className="activity">
+                  <div className="slot">{activity.time}</div>
+                  <div>
+                    <h3>{activity.title}</h3>
+                    <p className="category">{activity.category}</p>
+                    {activity.description && <p>{activity.description}</p>}
+                    {activity.why && <p className="why">Why: {activity.why}</p>}
+                    {activity.tips && <small>{activity.tips}</small>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
 
-      <section className="why-section">
-        <p className="eyebrow">WHY THIS TRIP?</p>
-        <h2>Why we chose these places for you</h2>
-        {itinerary.whyThisTrip.map((x) => (
-          <p key={x}>✦ {x}</p>
-        ))}
-        <h3>Make it even greener</h3>
-        {itinerary.ecoTips.map((x) => (
-          <p key={x}>↗ {x}</p>
-        ))}
+        {itinerary.why && (
+          <section className="why-section">
+            <h2>Why These Experiences?</h2>
+            {Array.isArray(itinerary.why) ? (
+              itinerary.why.map((item, idx) => (
+                <div key={idx}>
+                  {typeof item === "object" ? (
+                    <>
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                    </>
+                  ) : (
+                    <p>{item}</p>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p>{itinerary.why}</p>
+            )}
+          </section>
+        )}
       </section>
     </main>
   );
