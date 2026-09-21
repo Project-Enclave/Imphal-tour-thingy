@@ -353,7 +353,7 @@ function Result({
           <div className="summary">
             {itinerary.days && (
               <>
-                <b>{itinerary.days}</b>
+                <b>{itinerary.days.length}</b>
                 <span>Days</span>
               </>
             )}
