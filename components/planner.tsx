@@ -357,9 +357,9 @@ function Result({
                 <span>Days</span>
               </>
             )}
-            {itinerary.budget && (
+            {itinerary.totalCost&& (
               <>
-                <b>₹{itinerary.budget.toLocaleString("en-IN")}</b>
+                <b>₹{itinerary.totalCost.toLocaleString("en-IN")}</b>
                 <span>Est. Budget</span>
               </>
             )}
@@ -390,11 +390,11 @@ function Result({
           ))}
         </div>
 
-        {itinerary.why && (
+        {itinerary.whyThisTrip && (
           <section className="why-section">
             <h2>Why These Experiences?</h2>
-            {Array.isArray(itinerary.why) ? (
-              itinerary.why.map((item, idx) => (
+            {Array.isArray(itinerary.whyThisTrip) ? (
+              itinerary.whyThisTrip.map((item, idx) => (
                 <div key={idx}>
                   {typeof item === "object" ? (
                     <>
@@ -407,7 +407,7 @@ function Result({
                 </div>
               ))
             ) : (
-              <p>{itinerary.why}</p>
+              <p>{itinerary.whyThisTrip}</p>
             )}
           </section>
         )}
