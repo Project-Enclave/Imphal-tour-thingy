@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { Interest, Itinerary, TripPreferences } from "@/lib/types";
+import type { Interest, Itinerary, ItineraryItem, TripPreferences } from "@/lib/types";
+import MapSearchLinks from "@/components/map-search-links";
 
 const interests: Interest[] = [
   "History & Heritage",
@@ -100,7 +101,7 @@ export default function Planner() {
         </a>
         <span>Smart Trip Planner</span>
         <span>
-          <a href="/trips">My trips</a> · <a href="/admin">Dashboard</a>
+          <a href="/trips">My trips</a> · <a href="/admin">Dashboard</a> · <a href="/lang" title="Language / Translation" aria-label="Change language">🌐</a>
         </span>
       </nav>
 
@@ -200,42 +201,49 @@ export default function Planner() {
                 Number of travelers{" "}
                 <input
                   type="number"
-                  min="1"
-                  max="20"
+                  min={1}
+                  max={20}
                   value={p.travelers}
-                  onChange={(e) =>
-                    setP({ ...p, travelers: Number(e.target.value) })
-                  }
+                  onChange={(e) => setP({ ...p, travelers: Number(e.target.value) })}
                 />
               </label>
             </>
           )}
 
           {step === 5 && (
-            <Choice
-              title="Where will your journey begin?"
-              values={["Imphal", "Imphal Airport", "Custom location"]}
-              value={p.start}
-              onChange={(v) => setP({ ...p, start: String(v) })}
-            />
+            <>
+              <h2>Where are you starting from?</h2>
+              <p>This helps us sort places by travel time.</p>
+              <div className="choices">
+                {["Imphal", "Outside Manipur"].map((v) => (
+                  <button
+                    key={v}
+                    className={p.start === v ? "selected" : ""}
+                    onClick={() => setP({ ...p, start: v })}
+                  >
+                    {v}
+                  </button>
+                ))}
+              </div>
+            </>
           )}
 
           {step === 6 && (
             <>
               <h2>Any accessibility needs?</h2>
-              <p>We'll prioritize places that work for you.</p>
+              <p>Optional — we'll prioritise places that match.</p>
               <div className="chips">
                 {options.accessibility.map((a) => (
                   <button
                     key={a}
                     className={p.accessibility.includes(a) ? "selected" : ""}
                     onClick={() =>
-                      setP({
-                        ...p,
-                        accessibility: p.accessibility.includes(a)
-                          ? p.accessibility.filter((x) => x !== a)
-                          : [...p.accessibility, a],
-                      })
+                      setP((x) => ({
+                        ...x,
+                        accessibility: x.accessibility.includes(a)
+                          ? x.accessibility.filter((i) => i !== a)
+                          : [...x.accessibility, a],
+                      }))
                     }
                   >
                     {p.accessibility.includes(a) ? "✓ " : ""}
@@ -243,42 +251,29 @@ export default function Planner() {
                   </button>
                 ))}
               </div>
-              <h3>Preferred pace</h3>
-              <Choice
-                values={options.pace}
-                value={p.pace}
-                onChange={(v) =>
-                  setP({ ...p, pace: v as TripPreferences["pace"] })
-                }
-                render={(v) => String(v).replace(/^./, (c) => c.toUpperCase())}
-              />
             </>
           )}
 
           {step === 7 && (
-            <div className="review">
-              <h2>Ready for your Manipur adventure?</h2>
-              <p>
-                {p.days} days · ₹{p.budget.toLocaleString("en-IN")} budget ·{" "}
-                {p.travelers} traveler{p.travelers > 1 ? "s" : ""}
+            <>
+              <h2>Ready to plan your trip?</h2>
+              <p className="muted">
+                {p.days} day{p.days > 1 ? "s" : ""} · ₹{p.budget.toLocaleString("en-IN")} budget ·{" "}
+                {p.interests.slice(0, 3).join(", ")}
+                {p.interests.length > 3 ? ` +${p.interests.length - 3} more` : ""}
               </p>
-              <p className="muted">{p.interests.join(" · ")}</p>
-            </div>
+            </>
           )}
 
           <footer>
-            <button
-              className="back"
-              onClick={() => setStep(Math.max(0, step - 1))}
-              disabled={step === 0}
-            >
+            <button className="back" disabled={step === 0} onClick={() => setStep((s) => s - 1)}>
               ← Back
             </button>
             {step < 7 ? (
-              <button onClick={() => setStep(step + 1)}>Continue →</button>
+              <button onClick={() => setStep((s) => s + 1)}>Continue →</button>
             ) : (
               <button onClick={generate} disabled={loading}>
-                {loading ? "Crafting your trip…" : "Generate My Manipur Trip ✨"}
+                {loading ? "Building your trip…" : "Create My Itinerary →"}
               </button>
             )}
           </footer>
@@ -338,8 +333,8 @@ function Result({
         <span>
           <a href="#" onClick={reset}>
             Start Over
-          </a>
-          · <a href="/admin">Dashboard</a>
+          </a>{" "}
+          · <a href="/admin">Dashboard</a> · <a href="/lang" title="Language / Translation" aria-label="Change language">🌐</a>
         </span>
       </nav>
 
@@ -357,7 +352,7 @@ function Result({
                 <span>Days</span>
               </>
             )}
-            {itinerary.totalCost&& (
+            {itinerary.totalCost && (
               <>
                 <b>₹{itinerary.totalCost.toLocaleString("en-IN")}</b>
                 <span>Est. Budget</span>
@@ -371,18 +366,18 @@ function Result({
             <div key={idx} className="day">
               <div className="day-title">
                 <p>Day {idx + 1}</p>
-                <h2>{day.title}</h2>
-                {day.weather && <span>{day.weather}</span>}
+                {/* theme replaces the old (broken) day.title */}
+                <h2>{day.theme}</h2>
               </div>
-              {day.activities?.map((activity, i) => (
+              {day.items?.map((item: ItineraryItem, i: number) => (
                 <div key={i} className="activity">
-                  <div className="slot">{activity.time}</div>
+                  <div className="slot">{item.slot}</div>
                   <div>
-                    <h3>{activity.title}</h3>
-                    <p className="category">{activity.category}</p>
-                    {activity.description && <p>{activity.description}</p>}
-                    {activity.why && <p className="why">Why: {activity.why}</p>}
-                    {activity.tips && <small>{activity.tips}</small>}
+                    <h3>{item.name}</h3>
+                    <p className="category">{item.category}</p>
+                    {item.description && <p>{item.description}</p>}
+                    {item.why && <p className="why">Why: {item.why}</p>}
+                    <MapSearchLinks name={item.name} location={item.location} />
                   </div>
                 </div>
               ))}
@@ -398,8 +393,8 @@ function Result({
                 <div key={idx}>
                   {typeof item === "object" ? (
                     <>
-                      <h3>{item.title}</h3>
-                      <p>{item.description}</p>
+                      <h3>{(item as { title: string }).title}</h3>
+                      <p>{(item as { description: string }).description}</p>
                     </>
                   ) : (
                     <p>{item}</p>
@@ -415,4 +410,3 @@ function Result({
     </main>
   );
 }
-
