@@ -23,6 +23,9 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -44,7 +47,8 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
   letter-spacing: 0.04em;
 }
 
@@ -82,7 +86,7 @@ nav > a:last-child {
 }
 
 .eyebrow {
-  font: 500 11px 'DM Mono';
+  font: 500 12px 'DM Mono';
   letter-spacing: 0.12em;
   color: var(--orange);
   margin: 0 0 17px;
@@ -102,7 +106,8 @@ nav > a:last-child {
 }
 
 .lede {
-  font-size: 18px;
+  font-size: 19px;
+  font-weight: 500;
   line-height: 1.55;
   max-width: 480px;
   margin: 24px auto 30px;
@@ -115,7 +120,8 @@ nav > a:last-child {
   color: white;
   border-radius: 2px;
   padding: 15px 22px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .hero button b {
@@ -159,7 +165,7 @@ nav > a:last-child {
 }
 
 .progress span {
-  font: 11px 'DM Mono';
+  font: 500 12px 'DM Mono';
   color: #7b8f82;
   padding-top: 11px;
   position: relative;
@@ -185,7 +191,7 @@ nav > a:last-child {
 
 .progress small {
   display: block;
-  font: 10px 'DM Mono';
+  font: 500 11px 'DM Mono';
   margin-top: 5px;
 }
 
@@ -197,13 +203,13 @@ nav > a:last-child {
 }
 
 .step {
-  font: 11px 'DM Mono';
+  font: 500 12px 'DM Mono';
   color: var(--orange);
   letter-spacing: 0.1em;
 }
 
 .panel h2 {
-  font: 700 36px / 1.1 'Playfair Display';
+  font: 700 clamp(32px, 4vw, 40px) / 1.1 'Playfair Display';
   margin: 12px 0;
 }
 
@@ -213,6 +219,7 @@ nav > a:last-child {
 
 .panel > p:not(.step) {
   color: #5c7065;
+  font-size: 17px;
 }
 
 .choices {
@@ -229,6 +236,8 @@ nav > a:last-child {
   padding: 14px 18px;
   color: var(--ink);
   border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .choices button.selected,
@@ -253,7 +262,8 @@ nav > a:last-child {
 .number {
   display: block;
   margin-top: 20px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .number input {
@@ -298,7 +308,7 @@ nav > a:last-child {
 }
 
 .account h2 {
-  font: 700 30px 'Playfair Display';
+  font: 700 32px 'Playfair Display';
   margin-top: 46px;
 }
 
@@ -339,8 +349,8 @@ nav > a:last-child {
 .auth-card label {
   display: grid;
   gap: 7px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .auth-card input {
@@ -355,6 +365,8 @@ nav > a:last-child {
   padding: 13px 16px;
   background: var(--ink);
   color: #fff;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .auth-card .outline {
@@ -398,7 +410,8 @@ nav > a:last-child {
 }
 
 .summary span {
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 500;
   color: #6b7c73;
 }
 
@@ -419,14 +432,14 @@ nav > a:last-child {
 
 .day-title p,
 .category {
-  font: 11px 'DM Mono';
+  font: 500 12px 'DM Mono';
   color: var(--orange);
   letter-spacing: 0.1em;
   margin: 0;
 }
 
 .day-title h2 {
-  font: 700 32px 'Playfair Display';
+  font: 700 36px 'Playfair Display';
   margin: 7px 0;
 }
 
@@ -450,11 +463,12 @@ nav > a:last-child {
 }
 
 .activity h3 {
-  font: 700 22px 'Playfair Display';
+  font: 700 24px / 1.2 'Playfair Display';
   margin: 6px 0;
 }
 
 .activity p {
+  font-size: 16px;
   line-height: 1.5;
   margin: 8px 0;
   color: #54675f;
@@ -490,6 +504,8 @@ nav > a:last-child {
 .why-section h3 {
   margin-top: 35px;
   color: #f1c767;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 /* Admin Section */
@@ -522,7 +538,8 @@ nav > a:last-child {
 }
 
 .metrics span {
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .admin section {
